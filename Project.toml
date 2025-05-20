@@ -1,0 +1,19 @@
+name = "TestOmnizart"
+uuid = "589bba42-b518-4049-99db-0870857c7954"
+authors = ["WooKyoung Noh <wookay.noh@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+MIDI = "f57c4921-e30c-5f49-b073-3f2f2ada663e"
+
+[compat]
+julia = "1.6"
+MIDI = "2.7"
+Jive = "0.3"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Jive = "ba5e3d4b-8524-549f-bc71-e76ad9e9deed"
+
+[targets]
+test = ["Test", "Jive"]
