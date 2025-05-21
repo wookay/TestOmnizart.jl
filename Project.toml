@@ -10,10 +10,15 @@ MIDI = "f57c4921-e30c-5f49-b073-3f2f2ada663e"
 julia = "1.6"
 MIDI = "2.7"
 Jive = "0.3"
+Bach = "0.1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Jive = "ba5e3d4b-8524-549f-bc71-e76ad9e9deed"
+Bach = "c92c169f-a3eb-4915-8049-070c90b52b43"
 
 [targets]
-test = ["Test", "Jive"]
+test = ["Test", "Jive", "Bach"]
+
+[sources]
+Bach = {url = "https://github.com/wookay/Bach.jl", rev = "main"}
