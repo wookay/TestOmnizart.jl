@@ -5,6 +5,8 @@ using Jive
 
 using Test
 using MIDI
+using Unitful: minute, s, ms, μs, ns, ps, fs
+using TimeUnits # Compound
 
 midi = load(normpath(@__DIR__, "../../midi_files/bogo1.mid"))
 
@@ -57,9 +59,13 @@ notes = getnotes(midi)
 #   position :: UInt64
 #   duration :: UInt64
 #   channel  :: UInt8
-note = first(notes)
-@test string(note) == "Note A3  | vel = 113 | pos = 273, dur = 70"
-@test note == Note(0x39, 0x71, 0x0000000000000111, 0x0000000000000046, 0x00)
+Note
+
+first_note = first(notes)
+last_note  = last(notes)
+@test string(first_note) == "Note A3  | vel = 113 | pos = 273, dur = 70"
+@test string(last_note)  == "Note E5  | vel = 122 | pos = 99563, dur = 123"
+@test first_note == Note(0x39, 0x71, 0x0000000000000111, 0x0000000000000046, 0x00)
 @test pitch_to_name(0x39; flat=true) == "A3"
 @test Int(0x71) == 113
 @test Int(0x0000000000000111) == 273
@@ -68,11 +74,13 @@ note = first(notes)
 # Return how many milliseconds elapsed at `note` position.
 # Matric time calculations need `tpq` field of `MIDIFile`.
 # Apparently it only make sense if the `note` coming from `MIDIFile`, otherwise you can't get the correct result.
-@test metric_time(midi, note) == 620.4545454545455
+@test metric_time(midi, first_note) ==     620.4545454545455
+@test metric_time(midi, last_note)  == 226_279.54545454547
+@test Compound(226_279.545_454_545_47ms) == Compound(226s, 279ms, 545μs, 454ns, 545ps, 470fs)
 
 # Return `note` duration time in milliseconds.
 # Matric time calculations need `tpq` field of `MIDIFile`.
 # Apparently it only make sense if the `note` coming from `MIDIFile`, otherwise you can't get the correct result.
-@test duration_metric_time(midi, note) == 159.0909090909091
+@test duration_metric_time(midi, first_note) == 159.0909090909091
 
 end # module test_midi_basic
