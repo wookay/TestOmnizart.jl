@@ -52,6 +52,7 @@ midi
 @test ms_per_tick(midi) == 2.272727272727273
 
 notes = getnotes(midi)
+@test notes.tpq == 220
 
 # mutable struct Note
 #   pitch    :: UInt8
