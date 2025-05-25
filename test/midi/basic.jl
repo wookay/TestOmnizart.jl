@@ -5,8 +5,6 @@ using Jive
 
 using Test
 using MIDI
-using Unitful: minute, s, ms, μs, ns, ps, fs
-using TimeUnits # Compound
 
 midi = load(normpath(@__DIR__, "../../midi_files/bogo1.mid"))
 
@@ -51,7 +49,7 @@ midi
 # on the quarter notes per minute `qpm` and ticks per quarter note `tpq`.
 @test ms_per_tick(midi) == 2.272727272727273
 
-notes = getnotes(midi)
+notes = getnotes(midi, 2)
 @test notes.tpq == 220
 
 # mutable struct Note
@@ -77,7 +75,6 @@ last_note  = last(notes)
 # Apparently it only make sense if the `note` coming from `MIDIFile`, otherwise you can't get the correct result.
 @test metric_time(midi, first_note) ==     620.4545454545455
 @test metric_time(midi, last_note)  == 226_279.54545454547
-@test Compound(226_279.545_454_545_47ms) == Compound(226s, 279ms, 545μs, 454ns, 545ps, 470fs)
 
 # Return `note` duration time in milliseconds.
 # Matric time calculations need `tpq` field of `MIDIFile`.

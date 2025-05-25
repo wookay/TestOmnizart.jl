@@ -7,6 +7,7 @@ version = "0.1.0"
 julia = "1.6"
 Jive = "0.3"
 MIDI = "2.7"
+MusicManipulations = "1.7"
 Unitful = "1.22"
 TimeUnits = "0.1"
 UnicodePlots = "3.7"
@@ -16,13 +17,14 @@ Bach = "0.1"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Jive = "ba5e3d4b-8524-549f-bc71-e76ad9e9deed"
 MIDI = "f57c4921-e30c-5f49-b073-3f2f2ada663e"
+MusicManipulations = "274955c0-c284-5bf7-b122-5ecd51c559de"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 TimeUnits = "06db76f2-042d-446b-9347-171e0bf2444a"
 UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 Bach = "c92c169f-a3eb-4915-8049-070c90b52b43"
 
 [targets]
-test = ["Test", "Jive", "MIDI", "Unitful", "TimeUnits", "UnicodePlots", "Bach"]
+test = ["Test", "Jive", "MIDI", "MusicManipulations", "Unitful", "TimeUnits", "UnicodePlots", "Bach"]
 
 [sources]
 Bach = {url = "https://github.com/wookay/Bach.jl", rev = "main"}
