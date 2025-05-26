@@ -9,8 +9,11 @@ Jive = "0.3"
 MIDI = "2.7"
 IterTools = "1.10"
 MusicManipulations = "1.7"
+Statistics = "1.11"
 Unitful = "1.22"
 TimeUnits = "0.1"
+Graphs = "1.12"
+GraphsMatching = "0.2"
 Bach = "0.1"
 
 [extras]
@@ -19,12 +22,15 @@ Jive = "ba5e3d4b-8524-549f-bc71-e76ad9e9deed"
 MIDI = "f57c4921-e30c-5f49-b073-3f2f2ada663e"
 IterTools = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
 MusicManipulations = "274955c0-c284-5bf7-b122-5ecd51c559de"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 TimeUnits = "06db76f2-042d-446b-9347-171e0bf2444a"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+GraphsMatching = "c3af3a8c-b79e-4b01-bf44-c718d7e0e0d6"
 Bach = "c92c169f-a3eb-4915-8049-070c90b52b43"
 
 [targets]
-test = ["Test", "Jive", "MIDI", "IterTools", "MusicManipulations", "Unitful", "TimeUnits", "Bach"]
+test = ["Test", "Jive", "MIDI", "IterTools", "MusicManipulations", "Statistics", "Unitful", "TimeUnits", "Graphs", "GraphsMatching", "Bach"]
 
 [sources]
 Bach = {url = "https://github.com/wookay/Bach.jl", rev = "main"}
