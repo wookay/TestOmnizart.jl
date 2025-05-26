@@ -12,7 +12,7 @@ notes = getnotes(midi, 2) # trackno
 hundred_notes = notes[1:100]
 @test note_to_fundamental(hundred_notes)[1:5] == split("A C E A G♯")
 
-@test first(SCALES) == ("B Major/G♯ minor" => ["C♯", "D♯", "E", "F♯", "G♯", "A♯", "B"])
+@test SCALES["A Major/F♯ minor"] == ["C♯", "D", "E", "F♯", "G♯", "A", "B"]
 @test length(SCALES) == 35
 
 # scale_identification
