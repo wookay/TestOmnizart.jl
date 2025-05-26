@@ -8,7 +8,7 @@ using MIDI
 
 midi = load(normpath(@__DIR__, "../../midi_files/bogo1.mid"))
 
-# The number of ticks per quarter note 
+# The number of ticks per quarter note
 @test midi.tpq == 220
 
 note_on_event = MIDI.NoteOnEvent(273, 0x90, 57, 113)
