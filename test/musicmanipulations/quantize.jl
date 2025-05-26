@@ -2,12 +2,12 @@ using Jive
 @useinside Main module test_musicmanipulations_quantize
 
 using Test
+using MIDI
 using MusicManipulations # note_to_fundamental
 using .MusicManipulations: scale_identification, SCALES
 using Unitful: ms, μs, ns, ps, fs, as
-using TimeUnits
-using MIDI
-using IterTools
+using TimeUnits # Compound
+using IterTools # partition
 
 midi = load(normpath(@__DIR__, "../../midi_files/bogo1.mid"))
 
@@ -33,11 +33,13 @@ end
 
 function get_metric_time(tempo_changes::Vector, notes, index)
     metric_t = metric_time(tempo_changes, notes.tpq, notes[index])
-    compound = Compound((metric_t)ms)
+    Compound((metric_t)ms)
 end
 
 tempo_changes = tempochanges(midi)
-@test get_metric_time(tempo_changes, notes, 1) == Compound(620ms, 004μs, 545ns, 454ps, 545fs, 455as)
+@test get_metric_time(tempo_changes, notes, 1) ==
+      Compound(620.454_545_454_545_5ms) ==
+      Compound(620ms, 454μs, 545ns, 454ps, 545fs, 500as)
 
 @test get_number_of_quarters(notes,    1) == (273, 1)
 @test get_number_of_quarters(notes,    3) == (449, 2)
