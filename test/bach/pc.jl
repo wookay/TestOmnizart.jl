@@ -6,6 +6,8 @@ using MIDI
 using Bach: PC, Fundamental, consecutive
 using Mods: Mods
 using Graphs # Graph Edge
+using TimeUnits: Compound
+using Unitful: ms, μs, ns, ps, fs, as
 
 const TYPE_VERTEX = UInt8
 const TYPE_WEIGHT = UInt
@@ -43,5 +45,39 @@ g = Graph(TYPE_VERTEX(only(PC.parameters)))
 
 @test length(w) == 29
 @test first(top_values(w, 10)) == (Edge(9, 0) => 1643)
+
+@test qpm(midi) == 120.0 # quarter notes per minute
+
+tpq = notes.tpq # ticks-per-quarter-note
+@test tpq == 220
+@test 16tpq == 3520 # 16 quarter notes
+
+@test ms_per_tick(midi) == 2.272727272727273 == 1000 * 60 / (qpm(midi) * tpq)
+@test Compound(2.272727272727273ms) == Compound(2ms, 272μs, 727ns, 272ps, 727fs, 273as)
+
+@test time_signature(midi) == "4/4"
+
+first_note = first(hundred_notes)
+st = (first_note.position ÷ tpq) * tpq
+@test first_note.position == 273
+fi = st + 16tpq 
+@test st == 220
+@test fi == 3740
+
+last_note = last(notes)
+last_st = (last_note.position ÷ tpq) * tpq
+@test last_note.position == 99563
+@test last_st == 99440
+
+function filter_notes(; notes::Vector{Note}, down_to::UInt, up_to::UInt)::Vector{Note}
+    filter(notes) do note
+        up_to >= note.position >= down_to
+    end
+end
+
+fi_notes = filter_notes(; notes = hundred_notes.notes, down_to = st, up_to = fi)
+@test length(fi_notes) == 31
+
+@test lastindex(notes) == 2122
 
 end # @useinside Main module test_bach_pc
