@@ -2,7 +2,7 @@ using Jive
 @useinside Main module test_musicmanipulations_scale
 
 using Test
-using MusicManipulations # note_to_fundamental
+using MusicManipulations # note_to_fundamental pitch_frequency
 using .MusicManipulations: scale_identification, SCALES
 using MIDI
 
