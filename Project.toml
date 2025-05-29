@@ -17,6 +17,7 @@ JuMP = "1.26"
 Cbc = "1.2"
 BlossomV = "0.4"
 Mods = "2.2"
+Karnak = "1.1"
 TimeUnits = "0.1"
 Bach = "0.1"
 
@@ -34,11 +35,12 @@ JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
 BlossomV = "6c721016-9dae-5d90-abf6-67daaccb2332"
 Mods = "7475f97c-0381-53b1-977b-4c60186c8d62"
+Karnak = "cd156443-31ad-4f6f-850f-a93ee5f75905"
 TimeUnits = "06db76f2-042d-446b-9347-171e0bf2444a"
 Bach = "c92c169f-a3eb-4915-8049-070c90b52b43"
 
 [targets]
-test = ["Test", "Jive", "MIDI", "IterTools", "MusicManipulations", "Statistics", "Unitful", "Graphs", "GraphsMatching", "JuMP", "Cbc", "BlossomV", "Mods",
+test = ["Test", "Jive", "MIDI", "IterTools", "MusicManipulations", "Statistics", "Unitful", "Graphs", "GraphsMatching", "JuMP", "Cbc", "BlossomV", "Mods", "Karnak",
         "TimeUnits", "Bach"]
 
 [sources]

@@ -21,11 +21,11 @@ note_on_event = MIDI.NoteOnEvent(273, 0x90, 57, 113)
 
 track = midi.tracks[2]
 @test trackname(track) == "Acoustic Grand Piano"
-e::MIDI.TrackNameEvent = track.events[1]
-@test e.dT == 0
-@test e.metatype == 0x03
-@test e.text == "Acoustic Grand Piano"
-@test string(e) == """MIDI.TrackNameEvent(0, 0x03, "Acoustic Grand Piano")"""
+event::MIDI.TrackNameEvent = track.events[1]
+@test event.dT == 0
+@test event.metatype == 0x03
+@test event.text == "Acoustic Grand Piano"
+@test string(event) == """MIDI.TrackNameEvent(0, 0x03, "Acoustic Grand Piano")"""
 
 notes_in_track2 = getnotes(track, 2)
 @test notes_in_track2.tpq == 2

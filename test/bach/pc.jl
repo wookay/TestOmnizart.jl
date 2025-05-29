@@ -2,23 +2,24 @@ using Jive
 @useinside Main module test_bach_pc
 
 using Test
+using Bach # PC consecutive
 using MIDI
-using Bach: PC, Fundamental, consecutive
 using Mods: Mods
-using Graphs # Graph Edge
+using Graphs # SimpleDiGraph Edge
 using TimeUnits: Compound
 using Unitful: ms, μs, ns, ps, fs, as
 
 const TYPE_VERTEX = UInt8
 const TYPE_WEIGHT = UInt
 
-function feed_edge(w::Dict{Edge{V}, W}, i_pc::V, j_pc::V, duration::W) where {V <: TYPE_VERTEX, W <: TYPE_WEIGHT}
+function feed_edge(g::SimpleDiGraph{V}, w::Dict{Edge{V}, W}, i_pc::V, j_pc::V, duration::W) where {V <: TYPE_VERTEX, W <: TYPE_WEIGHT}
     edge = Edge(i_pc, j_pc)
     if haskey(w, edge)
         w[edge] += duration
     else
         w[edge] = duration
     end
+    add_edge!(g, edge)
 end
 
 function top_values(d::Dict{K, V}, amount::Int)::Vector{Pair{K, V}} where {K, V}
@@ -29,6 +30,8 @@ midi = load(normpath(@__DIR__, "../../midi_files/bogo1.mid"))
 notes = getnotes(midi, 2) # trackno
 hundred_notes = notes[1:100]
 
+g = SimpleDiGraph(TYPE_VERTEX(only(PC.parameters)))
+
 c = consecutive(hundred_notes)
 lastind = lastindex(c)
 w = Dict{Edge{TYPE_VERTEX}, TYPE_WEIGHT}()
@@ -37,11 +40,9 @@ for (i, (i_note, j_note)) in enumerate(c)
     j_fm = Fundamental(j_note)
     i_pc = TYPE_VERTEX(Mods.value(i_fm.pc))
     j_pc = TYPE_VERTEX(Mods.value(j_fm.pc))
-    feed_edge(w, i_pc, j_pc, i_note.duration)
-    i == lastind && feed_edge(w, j_pc, j_pc, j_note.duration)
+    feed_edge(g, w, i_pc, j_pc, i_note.duration)
+    i == lastind && feed_edge(g, w, j_pc, j_pc, j_note.duration)
 end
-
-g = Graph(TYPE_VERTEX(only(PC.parameters)))
 
 @test length(w) == 29
 @test first(top_values(w, 10)) == (Edge(9, 0) => 1643)
@@ -77,7 +78,14 @@ end
 
 fi_notes = filter_notes(; notes = hundred_notes.notes, down_to = st, up_to = fi)
 @test length(fi_notes) == 31
-
 @test lastindex(notes) == 2122
+
+import Bach: edge_labels_func
+function edge_labels_func(edge_n::Int, edge_src, edge_dst, from, to)
+end
+
+d = draw_graph(g)
+svg = sprint(Base.show, MIME("image/svg+xml"), d)
+# write(normpath(@__DIR__, "draw_graph.svg"), svg)
 
 end # @useinside Main module test_bach_pc
